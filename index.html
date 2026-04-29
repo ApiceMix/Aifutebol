@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Futebol | Pro Bets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0F172A',
+                        secondary: '#1E293B',
+                        verde: '#10B981',
+                        amarelo: '#F59E0B',
+                        vermelho: '#EF4444',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-gradient {
+                background: linear-gradient(145deg, #1E293B, #0F172A);
+            }
+            .status-verde {
+                border-left: 4px solid #10B981;
+            }
+            .status-amarelo {
+                border-left: 4px solid #F59E0B;
+            }
+            .status-vermelho {
+                border-left: 4px solid #EF4444;
+            }
+        }
+    </style>
+</head>
+<body class="bg-primary text-white font-inter antialiased min-h-screen">
+
+    <!-- NAVBAR -->
+    <nav class="bg-secondary/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center font-bold text-primary">P</div>
+                    <span class="font-bold text-xl tracking-tight">Pro Bets AI</span>
+                </div>
+                <div class="hidden md:flex space-x-6 text-sm font-medium">
+                    <a href="#inicio" class="hover:text-green-400 transition">Início</a>
+                    <a href="#analise" class="hover:text-green-400 transition">Análise</a>
+                    <a href="#ligas" class="hover:text-green-400 transition">Ligas</a>
+                    <a href="#prognosticos" class="hover:text-green-400 transition">Prognósticos</a>
+                </div>
+                <button class="md:hidden text-2xl">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        
+        <!-- HERO / PESQUISA -->
+        <section id="inicio" class="text-center py-10 lg:py-16">
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-4 leading-tight">
+                Análise Inteligente de <span class="text-green-500">Futebol</span>
+            </h1>
+            <p class="text-slate-400 max-w-2xl mx-auto mb-10">
+                Insira os times e receba um diagnóstico completo com as melhores oportunidades de apostas, baseado em estatísticas reais e Inteligência Artificial.
+            </p>
+
+            <!-- CARD DE PESQUISA -->
+            <div class="card-gradient rounded-2xl p-6 md:p-8 shadow-2xl max-w-3xl mx-auto border border-slate-700">
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-left text-sm font-medium text-slate-400 mb-2">Time da Casa</label>
+                        <input type="text" id="timeCasa" placeholder="Ex: Flamengo" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-left text-sm font-medium text-slate-400 mb-2">Time Visitante</label>
+                        <input type="text" id="timeVisitante" placeholder="Ex: Fluminense" class="w-full bg-slate-800 border border-slate-600 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 text-white">
+                    </div>
+                </div>
+                <button onclick="executarAnalise()" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-xl text-lg transition-all transform hover:scale-[1.02] shadow-lg shadow-green-900/30">
+                    🧠 ANALISAR PARTIDA
+                </button>
+            </div>
+        </section>
+
+        <!-- RESULTADOS E ABAS -->
+        <section id="analise" class="py-10 hidden" id="resultadoContainer">
+            <div class="flex flex-wrap gap-3 justify-center mb-8 border-b border-slate-700">
+                <button class="tab-btn active px-5 py-3 font-bold text-green-500 border-b-2 border-green-500" data-tab="resumo">Resumo</button>
+                <button class="tab-btn px-5 py-3 font-bold text-slate-400 hover:text-white" data-tab="estatisticas">Estatísticas</button>
+                <button class="tab-btn px-5 py-3 font-bold text-slate-400 hover:text-white" data-tab="mercados">Mercados</button>
+                <button class="tab-btn px-5 py-3 font-bold text-slate-400 hover:text-white" data-tab="placar">Placar Provável</button>
+            </div>
+
+            <!-- CONTEÚDO DAS ABAS -->
+            <div class="tab-content" id="resumo">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 status-verde">
+                        <h3 class="font-bold text-lg mb-2">Vitória Mandante</h3>
+                        <p class="text-3xl font-black text-green-500">65%</p>
+                        <p class="text-sm text-slate-400 mt-1">Alta probabilidade de ganho.</p>
+                        <span class="inline-block mt-3 px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-bold">RECOMENDADO</span>
+                    </div>
+                    
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 status-amarelo">
+                        <h3 class="font-bold text-lg mb-2">Empate</h3>
+                        <p class="text-3xl font-black text-amarelo-500">25%</p>
+                        <p class="text-sm text-slate-400 mt-1">Possibilidade remota.</p>
+                        <span class="inline-block mt-3 px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold">CAUTELA</span>
+                    </div>
+
+                    <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 status-vermelho">
+                        <h3 class="font-bold text-lg mb-2">Vitória Visitante</h3>
+                        <p class="text-3xl font-black text-red-500">10%</p>
+                        <p class="text-sm text-slate-400 mt-1">Cenário difícil de acontecer.</p>
+                        <span class="inline-block mt-3 px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-xs font-bold">EVITAR</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="estatisticas">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-800/50 p-6 rounded-xl">
+                        <h4 class="font-bold mb-4 text-lg">📊 Histórico e Performance</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>• Últimos 10 jogos: 7 vitórias, 2 empates, 1 derrota</li>
+                            <li>• Média de gols: 2.5 por jogo</li>
+                            <li>• 80% dos jogos com +2.5 gols</li>
+                            <li>• Forte performance no 1º Tempo</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/50 p-6 rounded-xl">
+                        <h4 class="font-bold mb-4 text-lg">⚡ Estilo de Jogo</h4>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li>• Time ofensivo, pressiona alto</li>
+                            <li>• Costuma marcar primeiro</li>
+                            <li>• Média de 6 escanteios por jogo</li>
+                            <li>• Poucos gols sofridos jogando em casa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="mercados">
+                 <div class="bg-slate-800/50 p-6 rounded-xl">
+                    <h4 class="font-bold mb-4">💸 Melhores Mercados (Valor Esperado Positivo)</h4>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                            <span>Over 2.5 Gols</span>
+                            <span class="text-green-400 font-bold">Odd @ 1.95</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                            <span>Ambas Marcam - SIM</span>
+                            <span class="text-green-400 font-bold">Odd @ 1.80</span>
+                        </div>
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-3">
+                            <span>Vitória + Over 1.5</span>
+                            <span class="text-green-400 font-bold">Odd @ 2.25</span>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+            <div class="tab-content hidden" id="placar">
+                <div class="text-center">
+                    <h4 class="font-bold text-xl mb-4">🏆 Placar Mais Provável</h4>
+                    <div class="inline-block bg-green-600 rounded-2xl p-8 shadow-lg">
+                        <span class="text-5xl font-black">2 - 0</span>
+                    </div>
+                    <p class="text-slate-400 mt-4">Baseado em média de gols e histórico de confrontos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- LISTA DE LIGAS -->
+        <section id="ligas" class="py-16">
+            <h2 class="text-3xl font-bold text-center mb-10">Competições Disponíveis</h2>
+            <div class="overflow-x-auto rounded-xl border border-slate-700">
+                <table class="w-full text-left">
+                    <thead class="bg-slate-800 text-slate-300">
+                        <tr>
+                            <th class="px-6 py-4">Código</th>
+                            <th class="px-6 py-4">Nome da Competição</th>
+                            <th class="px-6 py-4 text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-700">
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">WC</td><td class="px-6 py-4">FIFA World Cup</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">CL</td><td class="px-6 py-4">UEFA Champions League</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">BL1</td><td class="px-6 py-4">Bundesliga</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">DED</td><td class="px-6 py-4">Eredivisie</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">BSA</td><td class="px-6 py-4">Campeonato Brasileiro Série A</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">PD</td><td class="px-6 py-4">Primera Division</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">FL1</td><td class="px-6 py-4">Ligue 1</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">ELC</td><td class="px-6 py-4">Championship</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">PPL</td><td class="px-6 py-4">Primeira Liga</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">EC</td><td class="px-6 py-4">European Championship</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">SA</td><td class="px-6 py-4">Serie A</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                        <tr class="hover:bg-slate-800/50"><td class="px-6 py-4 font-bold">PL</td><td class="px-6 py-4">Premier League</td><td class="text-center"><span class="text-green-500">●</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-center text-slate-400 mt-6">Página dedicada com classificação e detalhes dos times em
